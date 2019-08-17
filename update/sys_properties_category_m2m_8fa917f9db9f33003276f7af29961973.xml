@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties_category_m2m">
+    <sys_properties_category_m2m action="INSERT_OR_UPDATE">
+        <category display_value="SKGT Board">1072187ddb5733003276f7af299619c4</category>
+        <order>300</order>
+        <property display_value="x_290873_skgt_boar.schedule_rest_sys_id" name="x_290873_skgt_boar.schedule_rest_sys_id">1f599fb9db9f33003276f7af299619b4</property>
+        <sys_class_name>sys_properties_category_m2m</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-08-17 06:31:45</sys_created_on>
+        <sys_id>8fa917f9db9f33003276f7af29961973</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_290873_skgt_boar.schedule_rest_sys_id.SKGT Board</sys_name>
+        <sys_package display_value="SKGT Board" source="x_290873_skgt_boar">74286955db5333003276f7af299619e8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SKGT Board">74286955db5333003276f7af299619e8</sys_scope>
+        <sys_update_name>sys_properties_category_m2m_8fa917f9db9f33003276f7af29961973</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-08-17 06:31:45</sys_updated_on>
+    </sys_properties_category_m2m>
+</record_update>

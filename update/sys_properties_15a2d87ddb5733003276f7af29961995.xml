@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
     <sys_properties action="INSERT_OR_UPDATE">
         <choices/>
-        <description/>
+        <description>Company name</description>
         <ignore_cache>false</ignore_cache>
         <is_private>false</is_private>
         <name>x_290873_skgt_boar.company</name>
@@ -11,16 +11,16 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-08-16 16:03:02</sys_created_on>
         <sys_id>15a2d87ddb5733003276f7af29961995</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>x_290873_skgt_boar.company</sys_name>
         <sys_package display_value="SKGT Board" source="x_290873_skgt_boar">74286955db5333003276f7af299619e8</sys_package>
         <sys_policy/>
         <sys_scope display_value="SKGT Board">74286955db5333003276f7af299619e8</sys_scope>
         <sys_update_name>sys_properties_15a2d87ddb5733003276f7af29961995</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-08-16 16:03:02</sys_updated_on>
+        <sys_updated_on>2019-08-17 06:33:08</sys_updated_on>
         <type>string</type>
-        <value/>
+        <value>Noser Bulgaria</value>
         <write_roles/>
     </sys_properties>
     <sys_translated_text action="delete_multiple" query="documentkey=15a2d87ddb5733003276f7af29961995"/>
