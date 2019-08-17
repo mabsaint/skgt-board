@@ -10,75 +10,79 @@
         <run_dayofweek>1</run_dayofweek>
         <run_period/>
         <run_start>2019-08-15 10:48:04</run_start>
-        <run_time>1970-01-01 08:00:00</run_time>
-        <run_type>on_demand</run_type>
+        <run_time>1970-01-01 09:00:00</run_time>
+        <run_type>daily</run_type>
         <script><![CDATA[var table = 'x_290873_skgt_boar_stop';
 
 try { 
- var r = new sn_ws.RESTMessageV2('x_290873_skgt_boar.SKGT', 'GetStops');
+	var r = new sn_ws.RESTMessageV2('x_290873_skgt_boar.SKGT', 'GetStops');
 
-//override authentication profile 
-//authentication type ='basic'/ 'oauth2'
-//r.setAuthenticationProfile(authentication type, profile name);
+	//override authentication profile 
+	//authentication type ='basic'/ 'oauth2'
+	//r.setAuthenticationProfile(authentication type, profile name);
 
-//set a MID server name if one wants to run the message on MID
-//r.setMIDServer('MY_MID_SERVER');
+	//set a MID server name if one wants to run the message on MID
+	//r.setMIDServer('MY_MID_SERVER');
 
-//if the message is configured to communicate through ECC queue, either
-//by setting a MID server or calling executeAsync, one needs to set skip_sensor
-//to true. Otherwise, one may get an intermittent error that the response body is null
-//r.setEccParameter('skip_sensor', true);
+	//if the message is configured to communicate through ECC queue, either
+	//by setting a MID server or calling executeAsync, one needs to set skip_sensor
+	//to true. Otherwise, one may get an intermittent error that the response body is null
+	//r.setEccParameter('skip_sensor', true);
 
- var response = r.execute();
- var responseBody = response.getBody();
- var httpStatus = response.getStatusCode();
- var stops = JSON.parse(responseBody);
+	var response = r.execute();
+	var responseBody = response.getBody();
+	var httpStatus = response.getStatusCode();
+	var stops = JSON.parse(responseBody);
 
-if (stops.length > 0) {
-	
-	// delete all existings:
-	var oldStops = new GlideRecord(table);
-	oldStops.query();
-	oldStops.setWorkflow(false);
-	oldStops.deleteMultiple();
-	
-	// fill in fresh data
-	 for (var i = 0; i < stops.length; i++) {
-		 var snStop = new GlideRecord(table);		
-			 snStop.initialize();
-			 snStop.setValue('name', stops[i].n);
-			 snStop.setValue('code', stops[i].c);
-			 snStop.setValue('latitude', stops[i].y);
-			 snStop.setValue('longitude', stops[i].x);
-			 snStop.insert();		 
-	 }
-	
-	// update stops around the office
-	
-	var util = new x_290873_skgt_boar.SKGTBoardUtil();
-	var office = new GlideRecord('core_company');
-	if (office.get('name', 'Noser Bulgaria')) {
-		util.updateOfficeStops(office, 300);
-		util.syncRestEndpoints();
+	if (stops.length > 0) {
+
+		// delete all existings:
+		var oldStops = new GlideRecord(table);
+		oldStops.query();
+		oldStops.setWorkflow(false);
+		oldStops.deleteMultiple();
+
+		// fill in fresh data
+		for (var i = 0; i < stops.length; i++) {
+			var snStop = new GlideRecord(table);		
+			snStop.initialize();
+			snStop.setValue('name', stops[i].n);
+			snStop.setValue('code', stops[i].c);
+			snStop.setValue('latitude', stops[i].y);
+			snStop.setValue('longitude', stops[i].x);
+			snStop.insert();		 
+		}
+
+		// update stops around the office
+		// get system properties:
+		var distance = gs.getProperty('x_290873_skgt_boar.distance');
+		var companyname = gs.getProperty('x_290873_skgt_boar.company');
+		var restMessage = gs.getProperty('x_290873_skgt_boar.schedule_rest_sys_id');
+		
+		var util = new x_290873_skgt_boar.SKGTBoardUtil();
+		var office = new GlideRecord('core_company');
+		if (office.get('name', companyname)) {
+			util.updateOfficeStops(office, distance);
+			util.syncRestEndpoints(restMessage);
+		}
 	}
 }
-}
 catch(ex) {
- var message = ex.message;
+	var message = ex.message;
 	gs.error("Refresh SKGT Stops: " + message);
 }]]></script>
         <sys_class_name>sysauto_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-08-15 10:56:52</sys_created_on>
         <sys_id>82210299db9333003276f7af29961920</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>Refresh SKGT Stops</sys_name>
         <sys_package display_value="SKGT Board" source="x_290873_skgt_boar">74286955db5333003276f7af299619e8</sys_package>
         <sys_policy/>
         <sys_scope display_value="SKGT Board">74286955db5333003276f7af299619e8</sys_scope>
         <sys_update_name>sysauto_script_82210299db9333003276f7af29961920</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-08-16 15:56:30</sys_updated_on>
+        <sys_updated_on>2019-08-17 06:39:51</sys_updated_on>
         <upgrade_safe>false</upgrade_safe>
     </sysauto_script>
 </record_update>

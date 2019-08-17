@@ -48,11 +48,12 @@ SKGTBoardUtil.prototype = {
 		return answer;
 	},
 
-	/**
-	 * updateOfficeStops
-	 * @param {GlideRecord} office
-	 * @param {numeric} radius
-	 * @return {void}
+	/**SNDOC
+	 @name updateOfficeStops
+	 @description Fill in all nearest stops to the office into board table
+	 @param {GlideRecord} [office] - company office
+	 @param {numeric} [radius] - distance from the office in which area should be stops
+	 @return {void}
 	 */
 	updateOfficeStops: function(office, radius) {
 		this.x = office.latitude;
@@ -76,15 +77,16 @@ SKGTBoardUtil.prototype = {
 	},
 	/**
 	 * sync rest messages
+	 * @param {string} restid - sys_id of the rest message
 	 */
-	syncRestEndpoints: function() {
+	syncRestEndpoints: function(restid) {
 		var board = new GlideRecord('x_290873_skgt_boar_skgt_board_table');
 		board.query();
 		while (board.next()) {
 			var code = board.getValue('code');
 			var msg = new GlideRecord('sys_rest_message_fn');
 				msg.addQuery('function_name', code);
-				msg.addQuery('rest_message', 'e8abb3e9db1733003276f7af2996196b');
+				msg.addQuery('rest_message', restid);
 				msg.query();
 			if (!msg.next()) {
 				// create a new:
@@ -107,15 +109,18 @@ SKGTBoardUtil.prototype = {
 		var board = new GlideRecord('x_290873_skgt_boar_skgt_board_table');
 		board.query();
 		while (board.next()) {
-			 this.doRestV2(board);
+			var delay = Math.ceil(Math.random() * 10000); // delay random seconds 
+			gs.info("Do Rest and wait for " + (delay / 1000) + 'seconds', 'SKGT');
+			this.doRestV2(board);
 
-			this.sleep(1000); // wait 3 sec
+			this.sleep(delay); // wait 3 sec
 		}
 	},
 
 	doRestV2: function(board) {
-		var sm = new sn_ws.RESTMessageV2('x_290873_skgt_boar.BUSSchedule', board.code);
-
+		gs.info('Find endpoint for ' + board.code, 'SKGT');
+		var sm = new sn_ws.RESTMessageV2('x_290873_skgt_boar.LineSchedule', board.code);
+		gs.info('Endpoint for code ' + board.code + ' ' + sm.getEndpoint(), 'SKGT');
 		var response = sm.execute();
 		var responseBody = response.getBody();
 		board.information = responseBody;
@@ -135,13 +140,13 @@ SKGTBoardUtil.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-08-15 11:50:16</sys_created_on>
         <sys_id>ab4f8255dbd333003276f7af2996194e</sys_id>
-        <sys_mod_count>24</sys_mod_count>
+        <sys_mod_count>34</sys_mod_count>
         <sys_name>SKGTBoardUtil</sys_name>
         <sys_package display_value="SKGT Board" source="x_290873_skgt_boar">74286955db5333003276f7af299619e8</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="SKGT Board">74286955db5333003276f7af299619e8</sys_scope>
         <sys_update_name>sys_script_include_ab4f8255dbd333003276f7af2996194e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-08-16 15:53:51</sys_updated_on>
+        <sys_updated_on>2019-08-17 08:48:59</sys_updated_on>
     </sys_script_include>
 </record_update>
