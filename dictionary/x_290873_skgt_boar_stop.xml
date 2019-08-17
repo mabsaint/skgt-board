@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Stop" max_length="40" name="x_290873_skgt_boar_stop" type="collection">
+        <element label="Code" max_length="40" name="code" type="integer"/>
+        <element label="Latitude" max_length="40" name="latitude" type="float"/>
+        <element label="Longitude" max_length="40" name="longitude" type="float"/>
+        <element label="Name" max_length="300" name="name" type="string_full_utf8"/>
+    </element>
+</database>

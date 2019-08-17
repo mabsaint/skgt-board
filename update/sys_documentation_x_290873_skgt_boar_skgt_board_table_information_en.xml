@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="information" label="Information" language="en" table="x_290873_skgt_boar_skgt_board_table">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>information</element>
+            <help/>
+            <hint/>
+            <label>Information</label>
+            <language>en</language>
+            <name>x_290873_skgt_boar_skgt_board_table</name>
+            <plural>Informations</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2019-08-16 13:44:55</sys_created_on>
+            <sys_id>2e33ffe1db1733003276f7af299619bb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Information</sys_name>
+            <sys_package display_value="SKGT Board" source="x_290873_skgt_boar">74286955db5333003276f7af299619e8</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="SKGT Board">74286955db5333003276f7af299619e8</sys_scope>
+            <sys_update_name>sys_documentation_x_290873_skgt_boar_skgt_board_table_information_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2019-08-16 13:44:55</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

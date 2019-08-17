@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="SKGT Board Table" max_length="40" name="x_290873_skgt_boar_skgt_board_table" type="collection">
+        <element label="Code" max_length="10" name="code" type="string"/>
+        <element label="Company" max_length="32" name="company" reference="core_company" type="reference"/>
+        <element label="Distance" max_length="40" name="distance" type="float"/>
+        <element label="Information" max_length="8000" name="information" type="string_full_utf8"/>
+        <element label="Stop" max_length="32" name="stop" reference="x_290873_skgt_boar_stop" type="reference"/>
+        <index name="index">
+            <element name="stop"/>
+        </index>
+        <index name="index2">
+            <element name="company"/>
+        </index>
+    </element>
+</database>

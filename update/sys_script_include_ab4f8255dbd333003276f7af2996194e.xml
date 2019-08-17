@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_290873_skgt_boar.SKGTBoardUtil</api_name>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>SKGTBoardUtil</name>
+        <script><![CDATA[var SKGTBoardUtil = Class.create();
+SKGTBoardUtil.prototype = {
+	initialize: function() {
+		this.x = 42.694017;
+		this.y = 23.336403; 
+	},
+	distance: function(lat1, lon1, lat2, lon2){  // generally used geo measurement function
+		var R = 6378.137; // Radius of earth in KM
+		var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
+		var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
+		var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+			Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+			Math.sin(dLon/2) * Math.sin(dLon/2);
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		var d = R * c;
+		return d * 1000; // meters
+	},
+
+	getNearestStops: function (radius) {
+		var answer = [];
+		var snStop = new GlideRecord('x_290873_skgt_boar_stop');
+		snStop.query();
+		while(snStop.next()) {
+			var dist = this.distance(this.x, this.y, snStop.latitude, snStop.longitude);
+			if (dist < radius) {
+				var obj = {
+					sys_id: snStop.getValue('sys_id'),
+					name: snStop.getValue('name'),
+					code: snStop.getValue('code'),
+					latitude: snStop.getValue('latitude'),
+					longitude: snStop.getValue('longitude'),
+				};
+				answer.push({
+					stop: obj,
+					distance: dist
+				});
+				//	gs.info(snStop.name + ' (' + snStop.code +') : ' + dist + ' / ' + snStop.latitude + ' : ' + snStop.longitude)
+			}	
+		}
+		return answer;
+	},
+
+	/**
+	 * updateOfficeStops
+	 * @param {GlideRecord} office
+	 * @param {numeric} radius
+	 * @return {void}
+	 */
+	updateOfficeStops: function(office, radius) {
+		this.x = office.latitude;
+		this.y = office.longitude;
+		var stops = this.getNearestStops(radius);
+
+		var oldStops = new GlideRecord('x_290873_skgt_boar_skgt_board_table');
+		oldStops.query();
+		oldStops.setWorkflow(false);
+		oldStops.deleteMultiple();
+
+		stops.forEach(function(stop){
+			var board = new GlideRecord('x_290873_skgt_boar_skgt_board_table');
+			board.initialize();
+			board.setValue('company', office.sys_id);
+			board.setValue('code', stop.stop.code);
+			board.setValue('distance', stop.distance);
+			board.setValue('stop', stop.stop.sys_id);
+			board.insert();
+		});
+	},
+	/**
+	 * sync rest messages
+	 */
+	syncRestEndpoints: function() {
+		var board = new GlideRecord('x_290873_skgt_boar_skgt_board_table');
+		board.query();
+		while (board.next()) {
+			var code = board.getValue('code');
+			var msg = new GlideRecord('sys_rest_message_fn');
+				msg.addQuery('function_name', code);
+				msg.addQuery('rest_message', 'e8abb3e9db1733003276f7af2996196b');
+				msg.query();
+			if (!msg.next()) {
+				// create a new:
+				var newmsg = new GlideRecord('sys_rest_message_fn');
+				newmsg.initialize();
+				newmsg.setValue('function_name', code);
+				newmsg.setValue('rest_message', 'e8abb3e9db1733003276f7af2996196b');
+				newmsg.setValue('http_method', 'get');
+				newmsg.setValue('rest_endpoint', 'https://api-arrivals.sofiatraffic.bg/api/v1/arrivals/' + code + '/');
+				newmsg.insert();
+			}
+		}	
+	},
+
+	/**
+	 * updateBoard
+	 */
+	updateBoard: function() {
+		// foreach stop on board check if there are rest endpoint
+		var board = new GlideRecord('x_290873_skgt_boar_skgt_board_table');
+		board.query();
+		while (board.next()) {
+			 this.doRestV2(board);
+
+			this.sleep(1000); // wait 3 sec
+		}
+	},
+
+	doRestV2: function(board) {
+		var sm = new sn_ws.RESTMessageV2('x_290873_skgt_boar.BUSSchedule', board.code);
+
+		var response = sm.execute();
+		var responseBody = response.getBody();
+		board.information = responseBody;
+		board.update();
+	},
+	
+	sleep: function(delay /* milliseconds*/) {
+		var current = new Date().getTime();	
+		var target = current + delay;
+		while (current < target) {
+			current = new Date().getTime();	
+		}
+	},
+	type: 'SKGTBoardUtil'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-08-15 11:50:16</sys_created_on>
+        <sys_id>ab4f8255dbd333003276f7af2996194e</sys_id>
+        <sys_mod_count>24</sys_mod_count>
+        <sys_name>SKGTBoardUtil</sys_name>
+        <sys_package display_value="SKGT Board" source="x_290873_skgt_boar">74286955db5333003276f7af299619e8</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="SKGT Board">74286955db5333003276f7af299619e8</sys_scope>
+        <sys_update_name>sys_script_include_ab4f8255dbd333003276f7af2996194e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-08-16 15:53:51</sys_updated_on>
+    </sys_script_include>
+</record_update>

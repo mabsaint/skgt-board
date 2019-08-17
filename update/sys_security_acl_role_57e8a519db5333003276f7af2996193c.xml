@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-08-15 09:02:12</sys_created_on>
+        <sys_id>57e8a519db5333003276f7af2996193c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_290873_skgt_boar_stop.x_290873_skgt_boar.user</sys_name>
+        <sys_package display_value="SKGT Board" source="x_290873_skgt_boar">74286955db5333003276f7af299619e8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SKGT Board">74286955db5333003276f7af299619e8</sys_scope>
+        <sys_security_acl display_value="x_290873_skgt_boar_stop">9fe8a519db5333003276f7af2996192b</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_57e8a519db5333003276f7af2996193c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-08-15 09:02:12</sys_updated_on>
+        <sys_user_role display_value="x_290873_skgt_boar.user" name="x_290873_skgt_boar.user">7c2869d5db5333003276f7af29961922</sys_user_role>
+        <transaction_id/>
+    </sys_security_acl_role>
+</record_update>
