@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function($scope, $interval) {
+  /* widget controller */
+  var c = this;
+	$scope.stops = c.data.stops;
+	$scope.stops.map(function(s) {
+		s.obj = JSON.parse(s.value)
+	})
+	
+	
+	$interval(function(){
+		c.server.update()
+		.then(function(data){
+			$scope.stops = c.data.stops;
+	$scope.stops.map(function(s) {
+		s.obj = JSON.parse(s.value)
+	})
+		});
+		
+	}, 7000)
+	
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.trolley {
+background-color: blue;
+  padding: 5px;
+  color: white;
+}
+
+.bus {
+background-color: red;
+  padding: 5px;
+  color: white;
+}
+
+.tram {
+background-color: orange;
+  padding: 5px;
+  color: white;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>skgt_schedule</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>skgt_schedule</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+data.stops = [];
+	var stops = new GlideRecord('x_290873_skgt_boar_skgt_board_table');
+	stops.addQuery('information', '!=', '{}');
+	stops.orderBy('code');
+	stops.query();
+	while (stops.next()) {
+		data.stops.push({value:stops.getValue('information')});
+	}
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-08-28 10:43:37</sys_created_on>
+        <sys_id>afcc78a1db2333003276f7af2996195f</sys_id>
+        <sys_mod_count>58</sys_mod_count>
+        <sys_name>skgt_schedule</sys_name>
+        <sys_package display_value="SKGT Board" source="x_290873_skgt_boar">74286955db5333003276f7af299619e8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SKGT Board">74286955db5333003276f7af299619e8</sys_scope>
+        <sys_update_name>sp_widget_afcc78a1db2333003276f7af2996195f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-08-28 14:17:01</sys_updated_on>
+        <template><![CDATA[
+<div ng-repeat="s in stops">
+<!-- your widget template -->
+ <strong>{{s.obj.code}}</strong>
+  <div ng-repeat="l in s.obj.lines">
+    <span class="{{l.vehicle_type}}">{{l.name}}</span>
+ 	<spn ng-repeat="a in l.arrivals | limitTo:3">
+   	{{a.time | limitTo:5}}
+    </spn>
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

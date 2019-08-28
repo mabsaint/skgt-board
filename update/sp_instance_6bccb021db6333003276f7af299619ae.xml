@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">2fccb021db6333003276f7af299619ac</sp_column>
+        <sp_widget display_value="skgt_schedule">afcc78a1db2333003276f7af2996195f</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-08-28 10:43:37</sys_created_on>
+        <sys_id>6bccb021db6333003276f7af299619ae</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="SKGT Board" source="x_290873_skgt_boar">74286955db5333003276f7af299619e8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SKGT Board">74286955db5333003276f7af299619e8</sys_scope>
+        <sys_update_name>sp_instance_6bccb021db6333003276f7af299619ae</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-08-28 10:43:37</sys_updated_on>
+        <title/>
+        <url/>
+        <widget_parameters/>
+    </sp_instance>
+    <sys_translated_text action="delete_multiple" query="documentkey=6bccb021db6333003276f7af299619ae"/>
+</record_update>
